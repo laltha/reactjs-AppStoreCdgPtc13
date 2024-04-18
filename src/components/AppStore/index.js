@@ -296,7 +296,6 @@ const appsList = [
 ]
 
 // Write your code here
-
 class AppStore extends Component {
   state = {searchInput: '', activeTabId: tabsList[0].tabId}
 
@@ -307,10 +306,11 @@ class AppStore extends Component {
   onChangeSearchInput = event => {
     this.setState({searchInput: event.target.value})
   }
+
   getActiveTabApps = searchedApps => {
     const {activeTabId} = this.state
     const filteredApps = searchedApps.filter(
-      eachApp => eachApp.category === activeTabId,
+      eachSearchedApp => eachSearchedApp.category === activeTabId,
     )
     return filteredApps
   }
@@ -322,48 +322,43 @@ class AppStore extends Component {
     )
     return searchResults
   }
+
   render() {
     const {searchInput, activeTabId} = this.state
     const searchResults = this.getSearchResults()
     const filteredApps = this.getActiveTabApps(searchResults)
-
     return (
-      <div className="bg-container">
-        <div className="sm-container">
+      <div className="app-container">
+        <div className="app-store">
           <h1 className="heading">App Store</h1>
           <div className="search-input-container">
             <input
               type="search"
-              className="input"
-              onChange={this.onChangeSearchInput}
+              placeholder="Search"
               value={searchInput}
+              onChange={this.onChangeSearchInput}
             />
             <img
               src="https://assets.ccbp.in/frontend/react-js/app-store/app-store-search-img.png"
               alt="search icon"
-              className="search"
+              className="search-icon"
             />
           </div>
-
-          <div>
-            <ul className="tab-container">
-              {tabsList.map(eachTab => (
-                <TabItem
-                  key={eachTab.tabId}
-                  tabDetails={eachTab}
-                  setActiveTabId={this.setActiveTabId}
-                  isActive={activeTabId === eachTab.tabId}
-                />
-              ))}
-            </ul>
-          </div>
-          <div>
-            <ul className="app-image-container">
-              {filteredApps.map(eachApp => (
-                <AppItem key={eachApp.appId} appDetails={eachApp} />
-              ))}
-            </ul>
-          </div>
+          <ul className="tabs-list">
+            {tabsList.map(eachTab => (
+              <TabItem
+                key={eachTab.tabId}
+                tabDetails={eachTab}
+                setActiveTabId={this.setActiveTabId}
+                isActive={activeTabId === eachTab.tabId}
+              />
+            ))}
+          </ul>
+          <ul className="apps-list">
+            {filteredApps.map(eachApp => (
+              <AppItem key={eachApp.appId} appDetails={eachApp} />
+            ))}
+          </ul>
         </div>
       </div>
     )
