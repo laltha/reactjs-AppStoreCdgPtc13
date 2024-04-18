@@ -1,0 +1,9 @@
+/* Write your CSS here */
+.appName {
+  height: 60px;
+  width: 60px;
+}
+.app-item {
+  margin-right: 20px;
+  padding: 10px;
+}
